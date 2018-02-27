@@ -8,7 +8,7 @@
     "markdown",
     "pages"
   ],
-  "main": "dist/index.js",
+  "main": "gatsby-node.js",
   "author": "Kennedy Rose <krose@escaladesports.com>",
   "repository": {
     "type": "git",

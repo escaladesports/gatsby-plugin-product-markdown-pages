@@ -45,7 +45,7 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 			if (!categories[category]) {
 				categories[category] = []
 			}
-			categories[category].push({...ctx})
+			categories[category].push(upperId)
 
 		}
 
@@ -57,7 +57,7 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 			component: resolve(`./src/templates/category.js`),
 			context: {
 				category,
-				products: categories[category],
+				regexProducts: `/${categories[category].join('|')}/`,
 			},
 		})
 	}

@@ -24,6 +24,7 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 
 	result.data.allProductMarkdown.edges.forEach(({ node }) => {
 		const id = node.productId
+		const category = node.category
 
 		// Create cateogry page
 		if (!categories[category]) {
@@ -35,7 +36,6 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 		if (id) {
 			const lowerId = id.toLowerCase()
 			const upperId = id.toUpperCase()
-			const category = node.category
 			const ctx = {
 				id,
 				lowerId,

@@ -21,38 +21,47 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 	}
 
 	const categories = {}
+	const products = []
 
+	// Get product data
 	result.data.allProductMarkdown.edges.forEach(({ node }) => {
 		const id = node.productId
 		const category = node.category
 
-		// Create cateogry page
-		if (!categories[category]) {
-			categories[category] = []
-		}
-		categories[category].push(upperId)
-
-		// Create product page
 		if (id) {
 			const lowerId = id.toLowerCase()
 			const upperId = id.toUpperCase()
-			const ctx = {
+
+
+			if (!categories[category]) {
+				categories[category] = []
+			}
+			categories[category].push(upperId)
+
+			products.push({
 				id,
 				lowerId,
 				upperId,
 				category,
-				regexProducts: `/${categories[category].join('|')}/`,
-			}
-			createPage({
-				path: `/product/${lowerId}`,
-				component: resolve(`./src/templates/product.js`),
-				context: {...ctx},
 			})
 
 		}
 
 	})
 
+	// Create product pages
+	products.forEach(product => {
+		createPage({
+			path: `/product/${product.lowerId}`,
+			component: resolve(`./src/templates/product.js`),
+			context: {
+				regexProducts: `/${categories[product.category].join('|')}/`,
+				...product
+			},
+		})
+	})
+
+	// Create category pages
 	for(let category in categories){
 		createPage({
 			path: `/category/${category}`,

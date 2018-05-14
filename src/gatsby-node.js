@@ -29,10 +29,12 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 		if (id) {
 			const lowerId = id.toLowerCase()
 			const upperId = id.toUpperCase()
+			const category = node.category
 			const ctx = {
 				id,
 				lowerId,
 				upperId,
+				category,
 			}
 			createPage({
 				path: `/product/${lowerId}`,
@@ -41,7 +43,6 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 			})
 
 			// Create cateogry page
-			const category = node.category
 			if (!categories[category]) {
 				categories[category] = []
 			}

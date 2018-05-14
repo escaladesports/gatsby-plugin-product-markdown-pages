@@ -25,6 +25,12 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 	result.data.allProductMarkdown.edges.forEach(({ node }) => {
 		const id = node.productId
 
+		// Create cateogry page
+		if (!categories[category]) {
+			categories[category] = []
+		}
+		categories[category].push(upperId)
+
 		// Create product page
 		if (id) {
 			const lowerId = id.toLowerCase()
@@ -35,18 +41,13 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 				lowerId,
 				upperId,
 				category,
+				regexProducts: `/${categories[category].join('|')}/`,
 			}
 			createPage({
 				path: `/product/${lowerId}`,
 				component: resolve(`./src/templates/product.js`),
 				context: {...ctx},
 			})
-
-			// Create cateogry page
-			if (!categories[category]) {
-				categories[category] = []
-			}
-			categories[category].push(upperId)
 
 		}
 

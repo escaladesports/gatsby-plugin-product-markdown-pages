@@ -29,6 +29,7 @@ _optimize
 .postcssrc
 /*.js
 /*.js.map
+package-lock.json
 
 # Temporary
 temp

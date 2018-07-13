@@ -71,7 +71,7 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 	})
 
 	// Create category pages
-	for (category in categories) {
+	for (let category in categories) {
 		let cats = category.split('/');
 		let context = {}
 		if (cats.length >= 2) {
@@ -89,7 +89,7 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 		}
 		createPage({
 			path: '/category/' + category,
-			component: (0, _path.resolve)('./src/templates/category.js'),
+			component: resolve('./src/templates/category.js'),
 			context: context
 		});
 	}

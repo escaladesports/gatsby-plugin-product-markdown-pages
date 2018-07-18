@@ -75,9 +75,10 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 		let cats = category.split('/');
 		let context = {}
 		if (cats.length >= 2) {
+			const re = new RegExp(`\/` + cats[0] + `-[^/]`, `gi`)
 			context = {
 				category: cats[0],
-				subcategory: cats[1],
+				subcategory: cats[1].replace(re, ``),
 				regexProducts: '/' + categories[category].join('|') + '/'
 			}
 		} else {

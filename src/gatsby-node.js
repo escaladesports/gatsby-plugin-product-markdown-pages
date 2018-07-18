@@ -28,7 +28,8 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 	result.data.allProductMarkdown.edges.forEach(({ node }) => {
 		const id = node.productId
 		const category = node.category
-		const subcategory = node.subcategory ? node.category + '/' + node.subcategory : '';
+		const re = new RegExp(category + `-`, `gi`)
+		const subcategory = node.subcategory ? node.category + '/' + node.subcategory.replace(re, ``) : '';
 
 		if (id) {
 			const lowerId = id.toLowerCase()
@@ -75,10 +76,9 @@ exports.createPages = async ({ boundActionCreators, graphql }) => {
 		let cats = category.split('/');
 		let context = {}
 		if (cats.length >= 2) {
-			const re = new RegExp(`\/` + cats[0] + `-[^/]`, `gi`)
 			context = {
 				category: cats[0],
-				subcategory: cats[1].replace(re, ``),
+				subcategory: cats[1],
 				regexProducts: '/' + categories[category].join('|') + '/'
 			}
 		} else {
